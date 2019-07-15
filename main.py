@@ -1,11 +1,5 @@
-import csv
+from mock.trading_data.py import *
 
-f = open('./korbitKRW.csv', 'r', encoding='utf-8')
-rdr = csv.reader(f)
-cnt = 0
-for line in rdr:
-    print(line)
-    cnt = cnt + 1
-    if cnt > 10:
-        break
-f.close()
+prices = get_avg_price(10)
+for price in prices:
+    print(price)
