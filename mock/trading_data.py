@@ -1,5 +1,4 @@
 import csv
-import itertools
 
 def get_avg_price(cnt):
     ret = []
