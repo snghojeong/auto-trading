@@ -21,6 +21,12 @@ class SimpleTrader:
             self.total_amount = self.total_amount + curr_amount
             self.avg_price = total_price / self.total_amount
 
+    def print_asset(self):
+        print('----------')
+        print('price: ', self.avg_price)
+        print('amount: ', self.total_amount)
+        print('----------')
+
 class Asset:
     def __init__(self):
         self.price = 0
