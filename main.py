@@ -25,6 +25,9 @@ with open('./korbitKRW.csv', 'r') as raw:
                     trader.deal(float(record[idx_pr]))
                     print('[ MAX asset: {0:10.0f}, Income: {1:8.0f} ]'.format(trader.max_amount, trader.income), end=', ')
                 print('TS: ', curr_ts, end='\r')
+    print('End of simulation')
+    print('Count: {0:8d}'.format(cnt))
     for trader in traders:
-        print('Count: ', cnt, '\tMAX asset: ', trader.max_amount, '\tIncome: ', trader.income, '\tRatio: ', trader.income*100/trader.max_amount)
+        print('MAX asset: {0:10.0f}, Income: {1:8.0f}'.format(trader.max_amount, trader.income))
+        print('Ratio: ', trader.income*100/trader.max_amount)
         trader.print_asset();
