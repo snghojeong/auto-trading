@@ -5,6 +5,7 @@ class SimpleTrader:
         self.purchase_amount = purchase_amount
         self.avg_price = 0
         self.income = 0
+        self.name = 'SimpleTrader'
 
     def deal(self, curr_price):
         if self.total_amount == 0:
@@ -40,6 +41,7 @@ class StepTrader:
         self.max_amount = 0
         self.total_amount = 0
         self.avg_price = 0
+        self.name = 'StepTrader'
 
     def deal(self, curr_price):
         for asset in list(filter(lambda x: x.price < curr_price, self.asset_list)):
