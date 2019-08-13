@@ -26,6 +26,7 @@ class SimpleTrader:
         print('----------')
         print('price: ', self.avg_price)
         print('amount: ', self.total_amount)
+        print('total: ', self.avg_price*self.total_amount)
         print('----------')
 
 class Asset:
@@ -65,6 +66,49 @@ class StepTrader:
             print('----------')
             print('price: ', asset.price)
             print('amount: ', asset.amount)
+            print('total: ', asset.price * asset.amount)
+            total_amount = total_amount + asset.amount
+            total_price = total_price + (asset.price*asset.amount)
+        print('----------')
+        print('Average price: ', )
+
+class StepExpTrader:
+    def __init__(self, purchase_amount):
+        self.asset_list = []
+        self.income = 0
+        self.purchase_amount = purchase_amount
+        self.max_amount = 0
+        self.total_amount = 0
+        self.avg_price = 0
+        self.name = 'StepExpTrader'
+
+    def deal(self, curr_price):
+        for asset in list(filter(lambda x: x.price < curr_price, self.asset_list)):
+            self.income = self.income + (curr_price - asset.price)*asset.amount
+        self.asset_list = list(filter(lambda x: x.price >= curr_price, self.asset_list))
+        curr_amount = self.purchase_amount / curr_price
+        for asset in self.asset_list:
+            asset.price = ((asset.price * asset.amount) + (curr_price * curr_amount)) / (asset.amount + curr_amount)
+            asset.amount = asset.amount + curr_amount
+        item = Asset()
+        item.price = curr_price
+        item.amount = curr_amount
+        self.asset_list.append(item)
+        total_price = 0
+        for asset in self.asset_list:
+            total_price = total_price + (asset.price * asset.amount)
+        self.total_amount = total_price
+        if self.max_amount < total_price:
+            self.max_amount = total_price
+
+    def print_asset(self):
+        total_amount = 0
+        total_price = 0
+        for asset in self.asset_list:
+            print('----------')
+            print('price: ', asset.price)
+            print('amount: ', asset.amount)
+            print('total: ', asset.price * asset.amount)
             total_amount = total_amount + asset.amount
             total_price = total_price + (asset.price*asset.amount)
         print('----------')
