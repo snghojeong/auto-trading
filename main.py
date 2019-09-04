@@ -31,6 +31,8 @@ with open('./korbitKRW.csv', 'r') as raw:
     print('End of simulation')
     print('Count: {0:8d}'.format(cnt))
     for trader in traders:
+        trader.print_asset();
+        print('=========================')
         print('MAX asset: {0:10.0f}, Income: {1:8.0f}'.format(trader.max_amount, trader.income))
         print('Ratio: ', trader.income*100/trader.max_amount/elasped_year)
-        trader.print_asset();
+        print('=========================')
