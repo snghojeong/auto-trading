@@ -113,3 +113,42 @@ class StepExpTrader:
             total_price = total_price + (asset.price*asset.amount)
         print('----------')
         print('Average price: ', )
+
+class PessimisticTrader:
+    def __init__(self, purchase_amount):
+        self.max_amount = 0
+        self.total_amount = 0
+        self.purchase_amount = purchase_amount
+        self.avg_price = 0
+        self.income = 0
+        self.pass_cnt = 0
+        self.max_pass_cnt = 0
+        self.name = 'PessimisticTrader'
+
+    def deal(self, curr_price):
+        if self.total_amount == 0:
+            self.total_amount = self.purchase_amount / curr_price
+            self.avg_price = curr_price
+        elif self.avg_price < curr_price:
+            self.income = self.income + (self.total_amount*curr_price - self.total_amount*self.avg_price)
+            self.total_amount = 0
+        else:
+            if self.pass_cnt >= self.max_pass_cnt:
+                self.max_pass_cnt = self.max_pass_cnt + 1
+                self.pass_cnt = 0;
+                curr_amount = self.purchase_amount / curr_price
+                total_price = (self.total_amount*self.avg_price) + (curr_amount*curr_price)
+                if total_price > self.max_amount:
+                    self.max_amount = total_price
+                self.total_amount = self.total_amount + curr_amount
+                self.avg_price = total_price / self.total_amount
+            else:
+                self.pass_cnt = self.pass_cnt + 1;
+
+    def print_asset(self):
+        print('----------')
+        print('price: ', self.avg_price)
+        print('amount: ', self.total_amount)
+        print('total: ', self.avg_price*self.total_amount)
+        print('----------')
+
