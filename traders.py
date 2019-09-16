@@ -2,12 +2,15 @@ class SimpleTrader:
     def __init__(self, purchase_amount):
         self.max_amount = 0
         self.total_amount = 0
+        self.acc_amount = 0
+        self.deal_cnt = 0
         self.purchase_amount = purchase_amount
         self.avg_price = 0
         self.income = 0
         self.name = 'SimpleTrader'
 
     def deal(self, curr_price):
+        self.deal_cnt = self_deal_cnt + 1
         if self.total_amount == 0:
             self.total_amount = self.purchase_amount / curr_price
             self.avg_price = curr_price
@@ -21,6 +24,7 @@ class SimpleTrader:
                 self.max_amount = total_price
             self.total_amount = self.total_amount + curr_amount
             self.avg_price = total_price / self.total_amount
+        self.acc_amount = self.acc_amount + self_total_amount
 
     def print_asset(self):
         print('----------')
