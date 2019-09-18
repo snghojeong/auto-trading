@@ -45,6 +45,8 @@ class StepTrader:
         self.purchase_amount = purchase_amount
         self.max_amount = 0
         self.total_amount = 0
+        self.acc_amount = 0
+        self.deal_cnt = 0
         self.avg_price = 0
         self.name = 'StepTrader'
 
