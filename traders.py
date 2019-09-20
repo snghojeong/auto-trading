@@ -51,6 +51,7 @@ class StepTrader:
         self.name = 'StepTrader'
 
     def deal(self, curr_price):
+        self.deal_cnt = self_deal_cnt + 1
         for asset in list(filter(lambda x: x.price < curr_price, self.asset_list)):
             self.income = self.income + (curr_price - asset.price)*asset.amount
         self.asset_list = list(filter(lambda x: x.price >= curr_price, self.asset_list))
@@ -64,6 +65,7 @@ class StepTrader:
         self.total_amount = total_price
         if self.max_amount < total_price:
             self.max_amount = total_price
+        self.acc_amount = self.acc_amount + self_total_amount
 
     def print_asset(self):
         total_amount = 0
