@@ -2,7 +2,7 @@ class SimpleTrader:
     def __init__(self, purchase_amount):
         self.max_amount = 0
         self.total_amount = 0
-        self.acc_amount = 0
+        self.acc_price = 0
         self.deal_cnt = 0
         self.purchase_amount = purchase_amount
         self.avg_price = 0
@@ -10,7 +10,7 @@ class SimpleTrader:
         self.name = 'SimpleTrader'
 
     def deal(self, curr_price):
-        self.deal_cnt = self_deal_cnt + 1
+        self.deal_cnt = self.deal_cnt + 1
         if self.total_amount == 0:
             self.total_amount = self.purchase_amount / curr_price
             self.avg_price = curr_price
@@ -24,12 +24,12 @@ class SimpleTrader:
                 self.max_amount = total_price
             self.total_amount = self.total_amount + curr_amount
             self.avg_price = total_price / self.total_amount
-        self.acc_amount = self.acc_amount + self_total_amount
+        self.acc_price = self.acc_price + (self.avg_price * self.total_amount)
 
     def print_asset(self):
         print('----------')
         print('price: ', self.avg_price)
-        print('amount: ', self.total_amount)
+        print('amount: ', self.total_amount, ', ', self.acc_price)
         print('total: ', self.avg_price*self.total_amount)
         print('----------')
 
@@ -45,13 +45,13 @@ class StepTrader:
         self.purchase_amount = purchase_amount
         self.max_amount = 0
         self.total_amount = 0
-        self.acc_amount = 0
+        self.acc_price = 0
         self.deal_cnt = 0
         self.avg_price = 0
         self.name = 'StepTrader'
 
     def deal(self, curr_price):
-        self.deal_cnt = self_deal_cnt + 1
+        self.deal_cnt = self.deal_cnt + 1
         for asset in list(filter(lambda x: x.price < curr_price, self.asset_list)):
             self.income = self.income + (curr_price - asset.price)*asset.amount
         self.asset_list = list(filter(lambda x: x.price >= curr_price, self.asset_list))
@@ -65,7 +65,7 @@ class StepTrader:
         self.total_amount = total_price
         if self.max_amount < total_price:
             self.max_amount = total_price
-        self.acc_amount = self.acc_amount + self_total_amount
+        self.acc_price = self.acc_price + (self.avg_price * self.total_amount)
 
     def print_asset(self):
         total_amount = 0
@@ -89,8 +89,11 @@ class StepExpTrader:
         self.total_amount = 0
         self.avg_price = 0
         self.name = 'StepExpTrader'
+        self.acc_price = 0
+        self.deal_cnt = 0
 
     def deal(self, curr_price):
+        self.deal_cnt = self.deal_cnt + 1
         for asset in list(filter(lambda x: x.price < curr_price, self.asset_list)):
             self.income = self.income + (curr_price - asset.price)*asset.amount
         self.asset_list = list(filter(lambda x: x.price >= curr_price, self.asset_list))
@@ -108,6 +111,7 @@ class StepExpTrader:
         self.total_amount = total_price
         if self.max_amount < total_price:
             self.max_amount = total_price
+        self.acc_price = self.acc_price + (self.avg_price * self.total_amount)
 
     def print_asset(self):
         total_amount = 0
@@ -132,8 +136,11 @@ class PessimisticTrader:
         self.pass_cnt = 0
         self.max_pass_cnt = 0
         self.name = 'PessimisticTrader'
+        self.acc_price = 0
+        self.deal_cnt = 0
 
     def deal(self, curr_price):
+        self.deal_cnt = self.deal_cnt + 1
         if self.total_amount == 0:
             self.total_amount = self.purchase_amount / curr_price
             self.avg_price = curr_price
@@ -152,6 +159,7 @@ class PessimisticTrader:
                 self.avg_price = total_price / self.total_amount
             else:
                 self.pass_cnt = self.pass_cnt + 1;
+        self.acc_price = self.acc_price + (self.avg_price * self.total_amount)
 
     def print_asset(self):
         print('----------')
@@ -169,8 +177,11 @@ class AggressiveTrader:
         self.avg_price = 0
         self.income = 0
         self.name = 'AggressiveTrader'
+        self.acc_price = 0
+        self.deal_cnt = 0
 
     def deal(self, curr_price):
+        self.deal_cnt = self.deal_cnt + 1
         if self.total_amount == 0:
             self.total_amount = self.curr_purchase / curr_price
             self.curr_purchase = self.curr_purchase * 2
@@ -187,6 +198,7 @@ class AggressiveTrader:
                 self.max_amount = total_price
             self.total_amount = self.total_amount + curr_amount
             self.avg_price = total_price / self.total_amount
+        self.acc_price = self.acc_price + (self.avg_price * self.total_amount)
 
     def print_asset(self):
         print('----------')
