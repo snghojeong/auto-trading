@@ -14,7 +14,8 @@ with open('./korbitKRW.csv', 'r') as raw:
     cnt = 0
     last_ts = 0
     start_ts = 0
-    traders = [ SimpleTrader(10000), StepTrader(10000), StepExpTrader(10000), PessimisticTrader(10000), AggressiveTrader(10000) ]
+    # traders = [ SimpleTrader(10000), StepTrader(10000), StepExpTrader(10000), PessimisticTrader(10000), AggressiveTrader(10000) ]
+    traders = [ SimpleTrader(10000), PessimisticTrader(10000), AggressiveTrader(10000) ]
     for record in cooked:
         cnt = cnt + 1
         curr_ts = int(record[idx_ts]);
@@ -35,5 +36,5 @@ with open('./korbitKRW.csv', 'r') as raw:
         print('=========================')
         print('Name: ', trader.name)
         print('Income: {1:8.0f}, MAX asset: {0:10.0f}, AVG asset: {2:10.0f}'.format(trader.max_amount, trader.income, trader.acc_price/trader.deal_cnt))
-        print('Ratio: ', trader.income*100/trader.max_amount/elasped_year)
+        print('Ratio: ', trader.income*100/trader.max_amount/elasped_year, ', ', trader.income*100/(trader.acc_price/trader.deal_cnt)/elasped_year)
         print('=========================')
