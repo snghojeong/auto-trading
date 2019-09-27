@@ -16,7 +16,7 @@ with open('./korbitKRW.csv', 'r') as raw, open('./output.csv', 'w') as outfile:
     last_ts = 0
     start_ts = 0
     # traders = [ SimpleTrader(10000), StepTrader(10000), StepExpTrader(10000), PessimisticTrader(10000), AggressiveTrader(10000) ]
-    traders = [ SimpleTrader(10000), PessimisticTrader(10000), AggressiveTrader(10000) ]
+    traders = [ SimpleTrader(10000), PessimisticTrader(10000), ExponentialAggressiveTrader(10000), LinearAggressiveTrader(10000) ]
     for record in cooked:
         cnt = cnt + 1
         curr_ts = int(record[idx_ts]);
@@ -26,8 +26,8 @@ with open('./korbitKRW.csv', 'r') as raw, open('./output.csv', 'w') as outfile:
             for trader in traders:
                 trader.deal(float(record[idx_pr]))
                 print('[ {0}, MAX asset: {1:10.0f}, Income: {2:8.0f} ]'.format(trader.name, trader.max_amount, trader.income), end=', ')
-            print('TS: ', curr_ts, end='\r')
-            outwriter.writerow([curr_ts, float(record[idx_pr]), traders[0].income, traders[1].income, traders[2].income])
+            print('TS: ', curr_ts)
+            outwriter.writerow([curr_ts, float(record[idx_pr]), traders[0].income, traders[1].income, traders[2].income, traders[3].income])
             if start_ts == 0:
                 start_ts = curr_ts
     elasped_year = (curr_ts - start_ts)/one_day/365

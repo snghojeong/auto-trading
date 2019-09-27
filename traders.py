@@ -168,7 +168,7 @@ class PessimisticTrader:
         print('total: ', self.avg_price*self.total_amount)
         print('----------')
 
-class AggressiveTrader:
+class ExponentialAggressiveTrader:
     def __init__(self, purchase_amount):
         self.max_amount = 0
         self.total_amount = 0
@@ -176,7 +176,7 @@ class AggressiveTrader:
         self.curr_purchase = self.purchase_amount;
         self.avg_price = 0
         self.income = 0
-        self.name = 'AggressiveTrader'
+        self.name = 'ExponentialAggressiveTrader'
         self.acc_price = 0
         self.deal_cnt = 0
 
@@ -206,4 +206,44 @@ class AggressiveTrader:
         print('amount: ', self.total_amount)
         print('total: ', self.avg_price*self.total_amount)
         print('----------')
+
+class LinearAggressiveTrader:
+    def __init__(self, purchase_amount):
+        self.max_amount = 0
+        self.total_amount = 0
+        self.purchase_amount = purchase_amount
+        self.curr_purchase = self.purchase_amount;
+        self.avg_price = 0
+        self.income = 0
+        self.name = 'LinearAggressiveTrader'
+        self.acc_price = 0
+        self.deal_cnt = 0
+
+    def deal(self, curr_price):
+        self.deal_cnt = self.deal_cnt + 1
+        if self.total_amount == 0:
+            self.total_amount = self.curr_purchase / curr_price
+            self.curr_purchase = self.curr_purchase * 2
+            self.avg_price = curr_price
+        elif self.avg_price < curr_price:
+            self.income = self.income + (self.total_amount*curr_price - self.total_amount*self.avg_price)
+            self.total_amount = 0
+            self.curr_purchase = self.purchase_amount
+        else:
+            curr_amount = self.curr_purchase / curr_price
+            self.curr_purchase = self.curr_purchase + self.purchase_amount
+            total_price = (self.total_amount*self.avg_price) + (curr_amount*curr_price)
+            if total_price > self.max_amount:
+                self.max_amount = total_price
+            self.total_amount = self.total_amount + curr_amount
+            self.avg_price = total_price / self.total_amount
+        self.acc_price = self.acc_price + (self.avg_price * self.total_amount)
+
+    def print_asset(self):
+        print('----------')
+        print('price: ', self.avg_price)
+        print('amount: ', self.total_amount)
+        print('total: ', self.avg_price*self.total_amount)
+        print('----------')
+
 
