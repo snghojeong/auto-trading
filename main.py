@@ -8,6 +8,16 @@ idx_ts = 0
 idx_pr = 1
 idx_am = 2
 
+def getoutrow(ts, price, traders):
+    output = list()
+    output.append(ts)
+    output.append(price)
+    output.append(traders[0].income)
+    output.append(traders[1].income)
+    output.append(traders[2].income)
+    output.append(traders[3].income)
+    return output
+
 with open('./korbitKRW.csv', 'r') as raw, open('./output.csv', 'w') as outfile:
     raw.seek(fd_pos_max_price)
     cooked = csv.reader(raw)
@@ -27,7 +37,7 @@ with open('./korbitKRW.csv', 'r') as raw, open('./output.csv', 'w') as outfile:
                 trader.deal(float(record[idx_pr]))
                 print('[ {0}, MAX asset: {1:10.0f}, Income: {2:8.0f} ]'.format(trader.name, trader.max_amount, trader.income), end=', ')
             print('TS: ', curr_ts)
-            outwriter.writerow([curr_ts, float(record[idx_pr]), traders[0].income, traders[1].income, traders[2].income, traders[3].income])
+            outwriter.writerow(getoutrow(curr_ts, float(record[idx_pr]), traders))
             if start_ts == 0:
                 start_ts = curr_ts
     elasped_year = (curr_ts - start_ts)/one_day/365
