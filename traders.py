@@ -246,4 +246,39 @@ class LinearAggressiveTrader:
         print('total: ', self.avg_price*self.total_amount)
         print('----------')
 
+class RebalancingTrader:
+    def __init__(self, purchase_amount):
+        self.max_amount = 0
+        self.total_amount = 0
+        self.income = 0
+        self.name = 'RebalancingTrader'
+        self.cash = 100000000
+        self.deal_cnt = 0
+        self.acc_price = 0
+        self.avg_price = 0
+
+    def deal(self, curr_price):
+        self.deal_cnt = self.deal_cnt + 1
+        if self.total_amount == 0:
+            self.total_amount = self.cash / curr_price
+        elif (self.total_amount * curr_price) < self.cash:
+            cash_to_buy = (self.cash - (self.total_amount * curr_price)) / 2
+            self.total_amount += cash_to_buy / curr_price
+            self.cash -= cash_to_buy
+        elif (self.total_amount * curr_price) > self.cash:
+            cash_to_sell = ((self.total_amount * curr_price) - self.cash) / 2
+            self.total_amount -= cash_to_sell / curr_price
+            self.cash += cash_to_sell
+        if (self.total_amount * curr_price) > self.max_amount:
+            self.max_amount = self.total_amount * curr_price
+        self.income = self.cash + (self.total_amount * curr_price) - 200000000
+        self.avg_price = curr_price
+        self.acc_price = self.acc_price + (self.avg_price * self.total_amount)
+
+    def print_asset(self):
+        print('----------')
+        print('price: ', self.avg_price)
+        print('amount: ', self.total_amount)
+        print('total: ', self.avg_price*self.total_amount)
+        print('----------')
 

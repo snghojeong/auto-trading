@@ -25,8 +25,7 @@ with open('./korbitKRW.csv', 'r') as raw, open('./output.csv', 'w') as outfile:
     cnt = 0
     last_ts = 0
     start_ts = 0
-    # traders = [ SimpleTrader(10000), StepTrader(10000), StepExpTrader(10000), PessimisticTrader(10000), AggressiveTrader(10000) ]
-    traders = [ SimpleTrader(10000), PessimisticTrader(10000), ExponentialAggressiveTrader(10000), LinearAggressiveTrader(10000) ]
+    traders = [ SimpleTrader(10000), PessimisticTrader(10000), ExponentialAggressiveTrader(10000), LinearAggressiveTrader(10000), RebalancingTrader(10000) ]
     for record in cooked:
         cnt = cnt + 1
         curr_ts = int(record[idx_ts]);
