@@ -1,8 +1,10 @@
 import csv
 from traders import *
+import numpy as np
 
 fd_pos_max_price = 213605280
 one_day = 60 * 60 * 24
+one_week = one_day * 7
 
 idx_ts = 0
 idx_pr = 1
