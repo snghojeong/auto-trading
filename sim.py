@@ -5,21 +5,26 @@ from pandas.plotting import register_matplotlib_converters
 
 register_matplotlib_converters()
 
-kospi = data.DataReader('^KS11', 'yahoo', start='1900-01-01')
-# kosdaq = data.DataReader('KQ11', 'yahoo')
+def simulate(cash, data):
+    asset = 0
+    result = list() 
+    for key in data['Open'].keys():
+        cash = cash + (asset * data['Open'][key])
+        result.append(cash)
+        asset = math.floor(cash / data['Close'][key])
+        cash = cash - (asset * data['Close'][key])
+    return result
 
-cash = 10000000
-asset = 0
-tracking = list() 
+kospi = data.DataReader('^KS11', 'yahoo', start='1900-01-01')
 print(kospi['Close'])
-for key in kospi['Open'].keys():
-    cash = cash + (asset * kospi['Open'][key])
-    tracking.append(cash)
-    asset = math.floor(cash / kospi['Close'][key])
-    cash = cash - (asset * kospi['Close'][key])
+kosdaq = data.DataReader('^KQ11', 'yahoo', start='1900-01-01')
+print(kosdaq['Close'])
+
+kospi_result = simulate(10000000, kospi) 
+kosdaq_result = simulate(10000000, kosdaq) 
 
 plt.subplot(2,1,1)
-plt.plot(tracking, label='1')
+plt.plot(kospi_result, label='KOSPI')
 plt.subplot(2,1,2)
-plt.plot(tracking, label='2')
+plt.plot(kosdaq_result, label='KOSDAQ')
 plt.show()
