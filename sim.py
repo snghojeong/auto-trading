@@ -10,7 +10,12 @@ def simulate(cash, data):
     result = list() 
     for key in data['Open'].keys():
         cash = cash + (asset * data['Open'][key])
+
+        asset = math.floor(cash / data['Close'][key])
+        cash = cash - (asset * data['Close'][key])
+        cash = cash + (asset * data['Open'][key])
         result.append(cash)
+
         asset = math.floor(cash / data['Close'][key])
         cash = cash - (asset * data['Close'][key])
     return result
