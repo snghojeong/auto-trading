@@ -5,15 +5,17 @@ from pandas.plotting import register_matplotlib_converters
 
 register_matplotlib_converters()
 
+trad_fee = 0.00025
+
 def simulate(cash, data):
     asset = 0
     result = list() 
     for key in data['Open'].keys():
-        cash = cash + (asset * data['Open'][key])
+        cash = cash + math.floor((asset * data['Open'][key]) * (1.0 - trad_fee))
 
         asset = math.floor(cash / data['Close'][key])
         cash = cash - (asset * data['Close'][key])
-        cash = cash + (asset * data['Open'][key])
+        cash = cash + math.floor((asset * data['Open'][key]) * (1.0 - trad_fee))
         result.append(cash)
 
         asset = math.floor(cash / data['Close'][key])
@@ -21,9 +23,9 @@ def simulate(cash, data):
     return result
 
 kospi = data.DataReader('^KS11', 'yahoo', start='1900-01-01')
-print(kospi['Close'])
+print(kospi)
 kosdaq = data.DataReader('^KQ11', 'yahoo', start='1900-01-01')
-print(kosdaq['Close'])
+print(kosdaq)
 
 kospi_result = simulate(10000000, kospi) 
 kosdaq_result = simulate(10000000, kosdaq) 
