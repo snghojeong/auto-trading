@@ -42,7 +42,6 @@ with open('./korbitKRW.csv', 'r') as raw, open('./output.csv', 'w') as outfile:
             if start_ts == 0:
                 start_ts = curr_ts
     elasped_year = (curr_ts - start_ts)/one_day/365
-    print('End of simulation')
     print('Count: {0:8d}'.format(cnt))
     for trader in traders:
         trader.print_asset();
