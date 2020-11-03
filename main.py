@@ -45,8 +45,8 @@ with open('./korbitKRW.csv', 'r') as raw, open('./output.csv', 'w') as outfile:
     print('Count: {0:8d}'.format(cnt))
     for trader in traders:
         trader.print_asset();
-        print('=========================')
+        print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
         print('Name: ', trader.name)
         print('Income: {1:8.0f}, MAX asset: {0:10.0f}, AVG asset: {2:10.0f}'.format(trader.max_amount, trader.income, trader.acc_price/trader.deal_cnt))
         print('Ratio: ', trader.income*100/trader.max_amount/elasped_year, ', ', trader.income*100/(trader.acc_price/trader.deal_cnt)/elasped_year)
-        print('=========================')
+        print('<<<<<<<<<<<<<<<<<<<<<<<<<<<<')
