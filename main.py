@@ -20,6 +20,7 @@ def getoutrow(ts, price, traders):
     output.append(traders[3].income)
     return output
 
+print('Simulation start...')
 with open('./korbitKRW.csv', 'r') as raw, open('./output.csv', 'w') as outfile:
     raw.seek(fd_pos_max_price)
     cooked = csv.reader(raw)
