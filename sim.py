@@ -5,7 +5,7 @@ from pandas.plotting import register_matplotlib_converters
 
 register_matplotlib_converters()
 
-trad_fee = 0.00025
+trad_fee = 0.0003
 
 def simulate(cash, data):
     asset = 0
