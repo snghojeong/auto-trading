@@ -1,3 +1,3 @@
 # auto-trading
 
-Auto-trading algorithms simulator for BTC.
+Auto-trading algorithms simulator for cryptocurrency.
