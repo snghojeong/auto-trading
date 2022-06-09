@@ -11,7 +11,7 @@ while seed > (cash*12):
     seed = math.floor(seed * rate)
     seed = seed - (cash*12)
     print(seed)
-    if cnt > 100:
+    if cnt > 1000:
         break
 
 print(cnt)
