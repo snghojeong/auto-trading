@@ -1,4 +1,4 @@
-class SimpleTrader:
+class BasicTrader:
     def __init__(self, purchase_amount):
         self.max_amount = 0
         self.total_amount = 0
@@ -7,7 +7,7 @@ class SimpleTrader:
         self.purchase_amount = purchase_amount
         self.avg_price = 0
         self.income = 0
-        self.name = 'SimpleTrader'
+        self.name = 'BasicTrader'
 
     def deal(self, curr_price):
         self.deal_cnt = self.deal_cnt + 1
